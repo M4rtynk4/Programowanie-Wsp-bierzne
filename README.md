@@ -1,1 +1,1 @@
-# Programowanie-Wsp-bierzne
+# Programowanie-Wspobiezne

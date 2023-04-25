@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    },
+    "Profil 1": {
+      "commandName": "Project"
+    },
+    "Profil 2": {
+      "commandName": "Project"
+    }
+  }
+}

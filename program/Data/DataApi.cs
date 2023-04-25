@@ -11,29 +11,17 @@ namespace Data
 
     public abstract class DataAbstractApi
     {
-        public abstract Ball CreateBall(int xposition, int yposition, int radius);
-     //   public abstract List<Ball> GetBall();
-       // public abstract int BoardWidth { get; }
-       // public abstract int BoardHeight { get; }
-       // public abstract void Disable();
-       // public abstract void CreateBoard(int width, int height);
-             public static DataAbstractApi CreateAPI()
+        //Metoda „CreateApi” klasy „DataAbstractApi” zwraca nową instancję klasy „DataApi”.
+        public static DataAbstractApi CreateApi()
         {
-            return new DataAPI();
+            return new DataApi();
         }
-         internal sealed class DataAPI : DataAbstractApi
+    }
+        // klasa wewnętrzna DataApi dziedzicząca z DataAbstractApi
+            internal sealed class DataApi : DataAbstractApi
         {
-            public override Ball CreateBall(int xposition, int yposition, int radius)
-            {
-                return new Ball(xposition, yposition, radius);
-            }
-
-            
-
+            //coś w przyszłości być może powstanie tutaj :)
         }
-
-     }
-
     
 }
 

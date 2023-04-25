@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Data": {
+      "commandName": "Project"
+    },
+    "Profil 1": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\Martyna\\source\\repos\\Programowanie-Wspobiezne1\\program\\View\\MainWindow.xaml"
+    }
+  }
+}

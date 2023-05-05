@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logic
+namespace Data
 {
     public class Ball
     {
@@ -13,8 +13,8 @@ namespace Logic
         public double r { get; set; }
         public double XSpeed { get; set; }
         public double YSpeed { get; set; }
-      
-        
+
+
 
 
         public Ball()
@@ -48,8 +48,7 @@ namespace Logic
             y = Y2;
         }
      
-        }
-
     }
+}
 
 

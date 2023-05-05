@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Data;
 
 namespace Logic
 {
@@ -40,13 +41,21 @@ namespace Logic
         {
             foreach(Ball ball in balls)
             {
-                ball.NewBallPosition(size);
+                Thread watek = new Thread(() => {
+                    while (true)
+                    {
+                        ball.NewBallPosition(size);
+                        Thread.Sleep(time);
+                    }
+                    });
+                watek.Start();
             }
 
         }
   
         public void StartMoving()
         {
+            /*
             ChangePosition = new Task(() =>
             {
                 while (true)
@@ -57,7 +66,8 @@ namespace Logic
                 }
             });
             ChangePosition.Start();
-            
+            */
+            Move();
         }
 
     }

@@ -25,8 +25,8 @@ namespace Data
         public Ball()
         {
             Random random = new Random();
-            this.XSpeed = random.NextDouble() * 10;
-            this.YSpeed = random.NextDouble() * 10;
+            this.XSpeed = random.NextDouble();
+            this.YSpeed = random.NextDouble();
             this.x = random.NextDouble() * 500;
             this.y = random.NextDouble() * 500;
             this.r = 10;
@@ -35,6 +35,7 @@ namespace Data
 
         public void NewBallPosition(int border, List<Ball> balls)
         {
+            semaphore.Wait();
             double Xtmp = x + XSpeed;
             double Ytmp = y + YSpeed;
 
@@ -46,7 +47,7 @@ namespace Data
             {
                 YSpeed = -YSpeed;
             }
-            semaphore.Wait();
+         
             foreach (Ball ball in balls)
             {
                 if (ball == this)
@@ -72,13 +73,14 @@ namespace Data
                     ball.YSpeed += ay;
                 }
             }
-            semaphore.Release();
+           
 
             double X2 = x + XSpeed;
             double Y2 = y + YSpeed;
 
             x = X2;
             y = Y2;
+            semaphore.Release();
         }
      
     }

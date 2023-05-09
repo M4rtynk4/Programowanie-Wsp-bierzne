@@ -43,7 +43,8 @@ namespace Logic
             }
             public override void start() 
             {
-                if(board.balls.Count > 0)
+                board.ThreadStop = false;
+                if (board.balls.Count > 0)
                 {
                     ChangePosition = Task.Run(board.StartMoving);
                 }
@@ -51,6 +52,7 @@ namespace Logic
              public override void stop() 
              {
                 board.balls.Clear();
+                board.ThreadStop=true;
                
              }
         }

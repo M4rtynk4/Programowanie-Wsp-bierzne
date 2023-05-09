@@ -55,11 +55,13 @@ namespace ViewModel
             modelApi.addBalls(readFromBox());
             task = new Task(ChangePosition);
             task.Start();
+            
         }
         private void StopButtonClickHandler()
         {
             modelApi.removeBalls();
             readFromBox();
+           
         }
 
         //ChangePosition() jest asynchroniczną metodą, która w nieskończonej pętli aktualizuje pozycje piłek w kolekcji balls.
@@ -75,7 +77,7 @@ namespace ViewModel
                 }
                 balls = ballsList;
                 RaisePropertyChanged(nameof(balls));
-                Thread.Sleep(20);
+                Thread.Sleep(1);
             }
         }
 

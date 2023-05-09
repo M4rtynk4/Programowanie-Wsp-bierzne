@@ -13,9 +13,10 @@ namespace Logic
         public List<Ball> balls { get; set; }
         private Task ChangePosition;
         private int time = 20;
-
+        public bool ThreadStop { get; set; }
         public Board(int size) 
-        {
+        {   
+            ThreadStop = true;  
             this.size = size;
             balls = new List<Ball>();
         }
@@ -42,7 +43,7 @@ namespace Logic
             foreach(Ball ball in balls)
             {
                 Thread watek = new Thread(() => {
-                    while (true)
+                    while (!ThreadStop)
                     {
                         ball.NewBallPosition(size, balls);
                         Thread.Sleep(time);
@@ -52,6 +53,8 @@ namespace Logic
             }
 
         }
+        
+        
   
         public void StartMoving()
         {

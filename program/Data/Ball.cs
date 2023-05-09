@@ -11,8 +11,13 @@ namespace Data
         public double x { get; set; }
         public double y { get; set; }
         public double r { get; set; }
+
+        public double w { get; set; }
         public double XSpeed { get; set; }
         public double YSpeed { get; set; }
+        
+        static SemaphoreSlim semaphore = new SemaphoreSlim(2);
+
 
 
 
@@ -25,9 +30,10 @@ namespace Data
             this.x = random.NextDouble() * 500;
             this.y = random.NextDouble() * 500;
             this.r = 10;
+            this.w = random.NextDouble() * 500;
         }
 
-        public void NewBallPosition(int border)
+        public void NewBallPosition(int border, List<Ball> balls)
         {
             double Xtmp = x + XSpeed;
             double Ytmp = y + YSpeed;
@@ -40,6 +46,33 @@ namespace Data
             {
                 YSpeed = -YSpeed;
             }
+            semaphore.Wait();
+            foreach (Ball ball in balls)
+            {
+                if (ball == this)
+                {
+                    continue;
+                }
+
+                double dx = ball.x - x;
+                double dy = ball.y - y;
+                double distance = Math.Sqrt(dx * dx + dy * dy);
+                double minDist = ball.r + r;
+
+                if (distance < minDist)
+                {
+                    double angle = Math.Atan2(dy, dx);
+                    double targetX = x + Math.Cos(angle) * minDist;
+                    double targetY = y + Math.Sin(angle) * minDist;
+                    double ax = (targetX - ball.x) * 0.3;
+                    double ay = (targetY - ball.y) * 0.3;
+                    XSpeed -= ax;
+                    YSpeed -= ay;
+                    ball.XSpeed += ax;
+                    ball.YSpeed += ay;
+                }
+            }
+            semaphore.Release();
 
             double X2 = x + XSpeed;
             double Y2 = y + YSpeed;

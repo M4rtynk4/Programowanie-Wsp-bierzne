@@ -44,7 +44,7 @@ namespace Logic
                 Thread watek = new Thread(() => {
                     while (true)
                     {
-                        ball.NewBallPosition(size);
+                        ball.NewBallPosition(size, balls);
                         Thread.Sleep(time);
                     }
                     });

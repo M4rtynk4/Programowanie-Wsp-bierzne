@@ -12,7 +12,7 @@ namespace Data
         public double y { get; set; }
         public double r { get; set; }
 
-        public double w { get; set; }
+        public double mass { get; set; }
         public double XSpeed { get; set; }
         public double YSpeed { get; set; }
         
@@ -25,17 +25,20 @@ namespace Data
         public Ball()
         {
             Random random = new Random();
-            this.XSpeed = random.NextDouble();
-            this.YSpeed = random.NextDouble();
+            this.XSpeed = random.NextDouble() * 7;
+            this.YSpeed = random.NextDouble() * 7;
             this.x = random.NextDouble() * 500;
             this.y = random.NextDouble() * 500;
             this.r = 10;
-            this.w = random.NextDouble() * 500;
+            this.mass = random.NextDouble() * 500;
         }
 
         public void NewBallPosition(int border, List<Ball> balls)
         {
             semaphore.Wait();
+
+          
+
             double Xtmp = x + XSpeed;
             double Ytmp = y + YSpeed;
 
@@ -55,6 +58,15 @@ namespace Data
                     continue;
                 }
 
+
+                double XS = ball.XSpeed;
+                double YS = ball.YSpeed;
+                double M = ball.mass;
+
+                double angle = Math.Atan2(YS, XS);
+
+                double energy = (XS * XS) + (YS * YS) * M / 2;
+
                 double dx = ball.x - x;
                 double dy = ball.y - y;
                 double distance = Math.Sqrt(dx * dx + dy * dy);
@@ -62,16 +74,36 @@ namespace Data
 
                 if (distance < minDist)
                 {
-                    double angle = Math.Atan2(dy, dx);
-                    double targetX = x + Math.Cos(angle) * minDist;
-                    double targetY = y + Math.Sin(angle) * minDist;
-                    double ax = (targetX - ball.x) * 0.3;
-                    double ay = (targetY - ball.y) * 0.3;
-                    XSpeed -= ax;
-                    YSpeed -= ay;
-                    ball.XSpeed += ax;
-                    ball.YSpeed += ay;
+                    double collisionVectorX = ball.x - x;
+                    double collisionVectorY = ball.y - y;
+
+                    double collisionVectorLength = Math.Sqrt(collisionVectorX * collisionVectorX + collisionVectorY * collisionVectorY);
+
+                    double collisionNormalX = collisionVectorX / collisionVectorLength;
+                    double collisionNormalY = collisionVectorY / collisionVectorLength;
+
+                    double relativeVelocity = (ball.XSpeed - XSpeed) * collisionNormalX + (ball.YSpeed - YSpeed) * collisionNormalY;
+
+                    double impulse = (-(1 + 1) * relativeVelocity) / (1 / M + 1 / ball.mass);
+
+                    double impulseX = impulse * collisionNormalX;
+                    double impulseY = impulse * collisionNormalY;
+
+                    XSpeed -= impulseX / M;
+                    YSpeed -= impulseY / M;
+                    ball.XSpeed += impulseX / ball.mass;
+                    ball.YSpeed += impulseY / ball.mass;
+
+                    double overlap = minDist - distance;
+                    double overlapX = collisionNormalX * overlap;
+                    double overlapY = collisionNormalY * overlap;
+
+                    x -= overlapX / 2;
+                    y -= overlapY / 2;
+                    ball.x += overlapX / 2;
+                    ball.y += overlapY / 2;
                 }
+
             }
            
 

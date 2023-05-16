@@ -46,7 +46,7 @@ namespace Logic
                 board.ThreadStop = false;
                 if (board.balls.Count > 0)
                 {
-                    ChangePosition = Task.Run(board.StartMoving);
+                    ChangePosition = Task.Run(board.Move);
                 }
             }
              public override void stop() 

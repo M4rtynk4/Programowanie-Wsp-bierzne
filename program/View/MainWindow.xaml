@@ -58,7 +58,7 @@
                 <Grid x:Name="board" Width="500" Height="500" Margin="136,43,36,260" Grid.RowSpan="2" >
 
                     <Border BorderBrush="Orange" Background="Black" BorderThickness="3" Margin="-304,-25,289,11">
-                        <ItemsControl ItemsSource="{Binding balls}" Margin="0,-3,-2,-2" HorizontalAlignment="Right" Width="514">
+                        <ItemsControl ItemsSource="{Binding balls}" Margin="0,-3,0,0" HorizontalAlignment="Center" Width="514" Height="513" VerticalAlignment="Top">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <Canvas Height="575" Width="575" />

@@ -11,7 +11,6 @@ namespace Logic
     {   
         public int size { get; set; }
         public List<Ball> balls { get; set; }
-        private Task ChangePosition;
         private int time = 20;
         public bool ThreadStop { get; set; }
         public Board(int size) 
@@ -45,8 +44,13 @@ namespace Logic
                 Thread watek = new Thread(() => {
                     while (!ThreadStop)
                     {
+                        
                         ball.NewBallPosition(size, balls);
+                        Collision.DetectCollisionsWall(size, balls);
+                        Collision.DetectCollisions(size, balls);
                         Thread.Sleep(time);
+                        
+
                     }
                     });
                 watek.Start();
@@ -54,24 +58,7 @@ namespace Logic
 
         }
         
-        
-  
-        public void StartMoving()
-        {
-            /*
-            ChangePosition = new Task(() =>
-            {
-                while (true)
-                {
-                    Move();
-                    Thread.Sleep(time);
-
-                }
-            });
-            ChangePosition.Start();
-            */
-            Move();
-        }
+       
 
     }
 }

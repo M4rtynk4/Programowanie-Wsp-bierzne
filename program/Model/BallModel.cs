@@ -11,8 +11,7 @@ namespace Model
     public class BallModel
     {
         private Ball ball;
-        private double x;
-        private double y;
+        
         
         public BallModel(Ball ball)
         {

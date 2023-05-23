@@ -8,6 +8,7 @@ namespace Data
 {
     public class Ball
     {
+        private Action<Ball> Detect_Collision;
         public double x { get; set; }
         public double y { get; set; }
         public double r { get; set; }
@@ -21,10 +22,10 @@ namespace Data
 
 
 
-        public Ball()
+        public Ball(Action<Ball> action)
         {
 
-            
+            Detect_Collision = action;
             Random random = new Random();
             this.XSpeed = (random.NextDouble() * 8) - 4.0; ;
             this.YSpeed = (random.NextDouble() * 8) - 4.0; ;
@@ -36,9 +37,9 @@ namespace Data
 
         public void NewBallPosition(int border, List<Ball> balls)
         {
-        
 
-          
+
+            
 
             double Xtmp = x + XSpeed;
             double Ytmp = y + YSpeed;
@@ -115,7 +116,7 @@ namespace Data
 
             x = X2;
             y = Y2;
-           
+            Detect_Collision(this);
         }
      
     }

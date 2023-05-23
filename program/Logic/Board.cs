@@ -47,7 +47,7 @@ namespace Logic
                 while (!ThreadStop)
                 {
 
-                    ball.NewBallPosition(size, balls);
+                    ball.NewBallPosition();
                     Collision.DetectCollisionsWall(size, balls);
                     Collision.DetectCollisions(ball, balls);
                     Thread.Sleep(time);

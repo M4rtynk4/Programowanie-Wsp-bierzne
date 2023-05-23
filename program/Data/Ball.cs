@@ -32,11 +32,9 @@ namespace Data
             this.mass = random.NextDouble() * 500;
         }
 
-        public void NewBallPosition(int border, List<Ball> balls)
+        public void NewBallPosition()
         {            
 
-            double Xtmp = x + XSpeed;
-            double Ytmp = y + YSpeed;
 
             double X2 = x + XSpeed;
             double Y2 = y + YSpeed;

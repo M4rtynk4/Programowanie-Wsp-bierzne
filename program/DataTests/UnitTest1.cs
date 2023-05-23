@@ -6,36 +6,31 @@ namespace DataTests
  
     public class BallTests
     {
-       
-
         [Test]
-        public void NewBallPosition_ReversesXSpeedWhenOutOfBorder()
+        public void NewBallPosition_ShouldUpdateBallCoordinates()
         {
-            
-            int border = 500;
+
             Ball ball = new Ball();
-            ball.x = border - ball.r + 1; // Ball is positioned at the right border
-            List<Ball> balls = new List<Ball>();
-            double initialXSpeed = ball.XSpeed;
-            ball.NewBallPosition(border, balls);
+            ball.x = 50;
+            ball.y = 50;
+            ball.XSpeed = 2;
+            ball.YSpeed = 3;
 
-            
-            Assert.AreEqual(-initialXSpeed, ball.XSpeed);
-        }
+            ball.NewBallPosition();
 
-        [Test]
-        public void NewBallPosition_ReversesYSpeedWhenOutOfBorder()
-        {
-           
-            int border = 500;
-            Ball ball = new Ball();
-            ball.y = border - ball.r + 1; // Ball is positioned at the bottom border
-            List<Ball> balls = new List<Ball>();
-            double initialYSpeed = ball.YSpeed;
-            ball.NewBallPosition(border, balls);
 
-            
-            Assert.AreEqual(-initialYSpeed, ball.YSpeed);
+            Assert.AreEqual(52, ball.x);
+            Assert.AreEqual(53, ball.y);
+
+
+            ball.XSpeed = -10;
+            ball.YSpeed = -8;
+
+
+            ball.NewBallPosition();
+
+            Assert.AreEqual(42, ball.x);
+            Assert.AreEqual(45, ball.y);
         }
     }
 

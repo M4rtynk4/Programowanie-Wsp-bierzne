@@ -46,13 +46,9 @@ namespace Logic
                     }
 
 
-                    double XS = ball.XSpeed;
-                    double YS = ball.YSpeed;
+                  
                     double M = ball.mass;
 
-                    double angle = Math.Atan2(YS, XS);
-
-                    double energy = (XS * XS) + (YS * YS) * M / 2;
 
                     double dx = ball.x - ball1.x;
                     double dy = ball.y - ball1.y;

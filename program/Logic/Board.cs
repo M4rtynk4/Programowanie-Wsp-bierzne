@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using Data;
@@ -9,17 +10,20 @@ namespace Logic
 {
     public class Board
     {
-       
-       
+
+
         public int size { get; set; }
         public List<Ball> balls { get; set; }
         private int time = 20;
         public bool ThreadStop { get; set; }
-        public Board(int size) 
-        {   
-            ThreadStop = true;  
+        private Log logger;
+        public Board(int size)
+        {
+            ThreadStop = true;
             this.size = size;
             balls = new List<Ball>();
+            logger = new Log();
+      
         }
 
         public void AddBalls(int BallsNumber)
@@ -32,35 +36,33 @@ namespace Logic
         }
         public void RemoveBalls(int BallsNumer)
         {
-            for(int j = 0; j < BallsNumer; j++)
+            for (int j = 0; j < BallsNumer; j++)
             {
                 balls.RemoveAt(j);
             }
-               
+
         }
 
         public void Move()
         {
-            foreach(Ball ball in balls)
+            for (int i = 0; i < balls.Count; i++)
             {
-                Thread watek = new Thread(() => {
-                while (!ThreadStop)
+                Ball ball = balls[i];
+                Thread thread = new Thread(() =>
                 {
-
-                    ball.NewBallPosition();
-                    Collision.DetectCollisionsWall(size, balls);
-                    Collision.DetectCollisions(ball, balls);
-                    Thread.Sleep(time);
-                        
-
+                    while (!ThreadStop)
+                    {
+                        ball.NewBallPosition();
+                        logger.AddToBuffer(ball);
+                        Collision.DetectCollisionsWall(size, balls);
+                        Collision.DetectCollisions(ball, balls);
+                   
+                        Thread.Sleep(time);
                     }
-                    });
-                watek.Start();
+                });
+                thread.Start();
             }
 
         }
-        
-       
-
     }
 }

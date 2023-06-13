@@ -32,10 +32,12 @@ namespace Logic
             {
                 this.dataApi = dataApii;
                 board = new Board(500);
-            }
+               
+        }
             public override void CreateBalls(int amound) 
             {
                 board.AddBalls(amound);
+                
             }
             public override List<Ball> GetBalls() 
             {

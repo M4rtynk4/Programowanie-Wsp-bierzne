@@ -8,11 +8,11 @@ namespace Data
 {
     public class Ball
     {
-        
+        private static int IId = 1;
         public double x { get; set; }
         public double y { get; set; }
         public double r { get; set; }
-
+        public int Id { get; set; }
         public double mass { get; set; }
         public double XSpeed { get; set; }
         public double YSpeed { get; set; }
@@ -22,7 +22,7 @@ namespace Data
         public Ball()
         {
 
-            
+            this.Id = IId++;
             Random random = new Random();
             this.XSpeed = (random.NextDouble() * 8) - 4.0; ;
             this.YSpeed = (random.NextDouble() * 8) - 4.0; ;

@@ -14,7 +14,7 @@ namespace Data
 
         public Log()
         {
-            timer = new Timer(Write, null, 0, 1000); // Write to the file every second. Adjust as needed.
+            timer = new Timer(Write, null, 0, 500);
         }
 
         public void AddToBuffer(Ball ball)
@@ -28,7 +28,7 @@ namespace Data
         {
             lock (lockObject)
             {
-                using (sw = new StreamWriter("../../../../Data/log.txt", append: true)) // set append: true to add logs to the existing file
+                using (sw = new StreamWriter("../../../../Data/log.txt", append: true))
                 {
                     while (buffer.TryTake(out string log))
                     {

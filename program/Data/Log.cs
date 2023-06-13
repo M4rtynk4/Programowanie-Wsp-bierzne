@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.IO;
-using System.Timers;
+using System.Threading;
 
 namespace Data
 {
@@ -9,14 +9,12 @@ namespace Data
     {
         private BlockingCollection<string> buffer = new BlockingCollection<string>();
         private StreamWriter sw;
-        private System.Timers.Timer timer;
+        private Timer timer;
         private object lockObject = new object();
 
         public Log()
         {
-            timer = new System.Timers.Timer(1000);
-            timer.Elapsed += TimerElapsed;
-            timer.Start();
+            timer = new Timer(Write, null, 0, 1000); // Write to the file every second. Adjust as needed.
         }
 
         public void AddToBuffer(Ball ball)
@@ -26,16 +24,11 @@ namespace Data
             buffer.Add(log);
         }
 
-        private void TimerElapsed(object sender, ElapsedEventArgs e)
-        {
-            Write();
-        }
-
-        public void Write()
+        public void Write(object state)
         {
             lock (lockObject)
             {
-                using (sw = new StreamWriter("../../../../Data/log.txt", append: true))
+                using (sw = new StreamWriter("../../../../Data/log.txt", append: true)) // set append: true to add logs to the existing file
                 {
                     while (buffer.TryTake(out string log))
                     {
